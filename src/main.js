@@ -6,6 +6,7 @@ const priority = document.querySelector('#priority-selector')
 
 // Event Listeners
 addButton.addEventListener('click', addTask);
+list.addEventListener('click', deleteAndCheck);
 
 // Functions
 function addTask(e) {
@@ -51,6 +52,16 @@ function addTask(e) {
 
   // reset the input value
   input.value = "";
+}
 
-
+function deleteAndCheck(e) {
+  const target = e.target;
+  item = target.parentElement;
+  if (target.className === 'trash-btn') {
+    item.remove();
+  }
+  if (target.className === 'complete-btn') {
+    item.classList.toggle('completed');
+  } 
+  
 }
