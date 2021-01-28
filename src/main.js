@@ -14,12 +14,14 @@ function addTask(e) {
   containerDiv.classList.add("todo-container");
   // append it to the list
   list.appendChild(containerDiv);
+
   // creating the div with class todo-priority
   const priorityDiv = document.createElement('div');
   priorityDiv.classList.add("todo-priority");
   priorityDiv.innerText = priority.value;
   // appending to the container
   containerDiv.appendChild(priorityDiv);
+
   // creating the div with class todo-created-at
   const dateDiv = document.createElement('div');
   dateDiv.classList.add("todo-created-at");
@@ -27,12 +29,28 @@ function addTask(e) {
   dateDiv.innerText = date; 
    // appending to the container
   containerDiv.appendChild(dateDiv);
+
   // creating the div with class todo-text
   const textDiv = document.createElement('div');
   textDiv.classList.add("todo-text");
   textDiv.innerText = input.value;
    // appending to the container
   containerDiv.appendChild(textDiv);
+
+  // check mark button
+  const completedButton = document.createElement('button');
+  completedButton.innerHTML = '<i class="fas fa-check"></i>';
+  completedButton.classList.add("complete-btn");
+  containerDiv.appendChild(completedButton);
+
+  // delete button
+  const trashButton = document.createElement('button');
+  trashButton.innerHTML = '<i class="fas fa-trash"></i>';
+  trashButton.classList.add('trash-btn');
+  containerDiv.appendChild(trashButton);
+
+  // reset the input value
+  input.value = "";
 
 
 }
