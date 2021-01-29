@@ -26,8 +26,12 @@ function addTask(e) {
   // creating the div with class todo-created-at
   const dateDiv = document.createElement('div');
   dateDiv.classList.add("todo-created-at");
-  const date = new Date().toISOString().split('T');
-  dateDiv.innerText = date; 
+  const date = new Date();
+  const years = date.toISOString().split('T')[0];
+  const month = date.toISOString().split('T')[1].split('.')[0];
+  const currentTime = `${years}
+   ${month}`;
+  dateDiv.innerText = currentTime; 
    // appending to the container
   containerDiv.appendChild(dateDiv);
 
@@ -63,5 +67,5 @@ function deleteAndCheck(e) {
   if (target.className === 'complete-btn') {
     item.classList.toggle('completed');
   } 
-  
 }
+

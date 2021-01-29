@@ -61,7 +61,7 @@ header,
   margin: 0.5rem;
   background: white;
   color: black;
-  font-size: 1.5rem;
+  font-size: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -81,9 +81,11 @@ header,
 
 .todo-created-at {
   font-size: 0.9rem;
+  flex: 3;
 }
 .todo-text {
   padding: 0rem 1rem;
+  flex: 5;
 }
 .complete-btn,
 .trash-btn {
