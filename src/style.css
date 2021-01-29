@@ -107,3 +107,21 @@ header,
   text-decoration: line-through;
   opacity: 0.5;
 }
+
+.countAndSortWapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sort-btn {
+  background: white;
+  color: #926dc3;
+  border: none;
+  padding: 1.03rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 10%;
+  margin-bottom: 5%;
+}
