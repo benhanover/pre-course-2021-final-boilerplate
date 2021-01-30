@@ -146,9 +146,6 @@ function getTasks() {
     todos = JSON.parse(localStorage.getItem('todos'));
   }
   todos.forEach(function (todo) {
-    // increase the counter
-    addButton.value++;
-    document.querySelector('.counter').innerText = `Tasks so far - ${addButton.value}`;
     // creating the div with class todo-container
     const containerDiv = document.createElement('div');
     containerDiv.classList.add("todo-container");
@@ -195,9 +192,6 @@ function getTasks() {
     trashButton.innerHTML = '<i class="fas fa-trash"></i>';
     trashButton.classList.add('trash-btn');
     containerDiv.appendChild(trashButton);
-
-    // 
-
 
   });
 }
