@@ -88,7 +88,6 @@ function deleteAndCheck(e) {
   item = target.parentElement;
   // delete
   if (target.className === 'trash-btn') {
-    removeLocalTasks(item);
     item.remove();
     addButton.value--;
     document.querySelector('.counter').innerText = `Tasks so far - ${addButton.value}`;
@@ -196,18 +195,9 @@ function getTasks() {
     trashButton.innerHTML = '<i class="fas fa-trash"></i>';
     trashButton.classList.add('trash-btn');
     containerDiv.appendChild(trashButton);
-  });
-}
 
-function removeLocalTasks(task) {
-   // check if i have things in the local storage
-   let todos;
-   if (localStorage.getItem('todos') === null) {
-     todos = [];
-   } else {
-     todos = JSON.parse(localStorage.getItem('todos'));
-  }
-  const taskIndex = task.children[2].innerText;
-  todos.splice(todos.indexOf(taskIndex), 1);
-  localStorage.setItem('todos', JSON.stringify(todos));
+    // 
+
+
+  });
 }
