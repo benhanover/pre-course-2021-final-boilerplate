@@ -1,158 +1,84 @@
-// array that keeps all tasks and is send to the api
+// set up for api
+const API_KEY = "$2b$10$Gngt6a2X5rSlrH5bkOyscea5zrXZQGieIPFU6D02.H8lZidUy7n3a";
+const BIN_ID = "601699620ba5ca5799d18d7b";
+const apiURL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+// variables
+let = counter = 0;
 let todoList = [];
-// Selectors
-const input = document.querySelector("#text-input");
-const addButton = document.querySelector("#add-button");
-const list = document.querySelector(".view-section");
-const priority = document.querySelector("#priority-selector");
-const countAndSortSection = document.querySelector(".countAndSortSection");
-addCountAndSort();
-const sort = document.querySelector(".sort-button");
 
-var firstLoad = true;
-// Event Listeners
-addButton.addEventListener("click", addTask);
-list.addEventListener("click", deleteAndCheck);
-sort.addEventListener("click", sortByPriority);
+// Elements
+const elInput = document.querySelector("#text-input");
+const elAddButton = document.querySelector("#add-button");
+const elList = document.querySelector(".view-section");
+const elPriority = document.querySelector("#priority-selector");
+const elCountAndSortSection = document.querySelector(".countAndSortSection");
+const elSort = document.querySelector(".sort-button");
 
-// activating the func
-readBin();
-
-// Functions
-function addTask(task, idx) {
-  // debugger;
-  console.log(task);
-  // increase the counter
-  addButton.value++;
-  document.querySelector(
-    ".counter"
-  ).innerText = `Tasks so far - ${addButton.value}`;
-  // creating the div with class todo-container
-  const containerDiv = document.createElement("div");
-  containerDiv.classList.add("todo-container");
-  // append it to the list
-  list.appendChild(containerDiv);
-
-  // creating the div with class todo-priority************
-  const priorityDiv = document.createElement("div");
-  priorityDiv.classList.add("todo-priority");
-  priorityDiv.setAttribute("value", priority.value);
-  if (task.priority !== undefined) {
-    priorityDiv.innerText = task.priority;
-  }
-  // came from the client
-  else {
-    priorityDiv.innerText = priority.value;
-  }
-  // appending to the container
-  containerDiv.appendChild(priorityDiv);
-
-  // creating the div with class todo-created-at**************
-  const dateDiv = document.createElement("div");
-  dateDiv.classList.add("todo-created-at");
-  let date;
-  // came from the api
-  let currentTime;
-  if (task.date !== undefined) {
-    date = new Date(task.date);
-    currentTime = changeDateFormat(date);
-  }
-  // came from the client
-  else {
-    date = new Date();
-    currentTime = changeDateFormat(date);
-  }
-  dateDiv.innerText = currentTime;
-  // appending to the container
-  containerDiv.appendChild(dateDiv);
-
-  // creating the div with class todo-text**********
-  const textDiv = document.createElement("div");
-  textDiv.classList.add("todo-text");
-  // came from the api
-  if (task.text !== undefined) {
-    textDiv.innerText = task.text;
-  }
-  // came from the client
-  else {
-    textDiv.innerText = input.value;
-  }
-  // appending to the container
-  containerDiv.appendChild(textDiv);
-
-  // check mark button
-  const completedButton = document.createElement("button");
-  completedButton.innerHTML = '<i class="fas fa-check"></i>';
-  completedButton.classList.add("complete-btn");
-  containerDiv.appendChild(completedButton);
-
-  // delete button
-  const trashButton = document.createElement("button");
-  trashButton.innerHTML = '<i class="fas fa-trash"></i>';
-  trashButton.classList.add("trash-btn");
-  trashButton.addEventListener("click", function (e, idx) {
-    deleteAndCheck(e, idx);
-  });
-  trashButton.setAttribute("data-task-index", idx);
-  containerDiv.appendChild(trashButton);
-
-  // update the api
-  // todoList.push({date, input.value, priority.value})
-
-  // reset the input value
-  input.value = "";
-  if (firstLoad) {
+// bind add new todo
+elAddButton.addEventListener("click", (e) => {
+  if (elInput.value === "") {
+    alert("Please type a name");
     return;
   }
+  taskObj = {
+    priority: elPriority.value,
+    date: new Date(),
+    text: elInput.value,
+    id: makeId(),
+  };
+  todoList.push(taskObj);
+  renderTask(taskObj);
   updateBin();
+  elInput.value = "";
+  counter++;
+  renderTodoCountSoFar();
+});
+
+// Render functions
+
+// creates the count and sort elements
+function renderTodoCountSoFar() {
+  // <h2>Tasks so far -</h2>
+  // <h2 id="counter" class="counter">${counter}</h2>
+  elCountAndSortSection.innerHTML = /*html*/ `
+    <h2 id="counter" class="counter">Tasks so far - ${counter}</h2>
+    <button id="sort-button" onclick="sortByPriority()">Sort by priority</button>`;
 }
-//  delete and check function
-function deleteAndCheck(e, idx) {
-  const target = e.target;
-  item = target.parentElement;
-  // delete
-  if (target.className === "trash-btn") {
-    item.remove();
+// prints the task in the html
+function renderTask(taskObj) {
+  // format date
+  let dateStr = "";
+  let date = new Date(taskObj.date);
+  dateStr = changeDateFormat(date);
 
-    // // need to delete from the api
-    //     console.log(todoList[0].date);
-    //     removeFromApi = document.querySelector("body > div.view-section-wrapper > div > div > div.todo-created-at").textContent;
-    //     console.log(removeFromApi);
-
-    // for (let i = 0; i < todoList.length; i++) {
-    //   if (todoList[i].date === removeFromApi) {
-    todoList.splice(idx, 1);
-
-    const url = `https://api.jsonbin.io/v3/b/60154a5daafcad2f59618c13`;
-
-    fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ "my-todo": todoList }),
-    });
-
-    // reset html
-    // list.innerHTML = "";
-    // todoList.forEach(function (todo, i) {
-    //   addTask(todo, i);
-    // });
-
-    // updateBin();
-    // return;
-    //   }
-    // }
-
-    addButton.value--;
-    document.querySelector(
-      ".counter"
-    ).innerText = `Tasks so far - ${addButton.value}`;
-  } // complete
-  if (target.className === "complete-btn") {
-    item.classList.toggle("completed");
-  }
+  const strContainerDiv = /*html*/ `
+      <div class="todo-container">
+        <div class="todo-priority">${taskObj.priority}</div>
+        <div class="todo-created-at">${dateStr}</div>
+        <div class="todo-text">${taskObj.text}</div>
+        <button class="complete-btn">
+          <i class="fas fa-check"></i>
+        </button>
+        <button class="trash-btn" onclick="deleteAndCheck('${taskObj.id}')">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    `;
+  elList.insertAdjacentHTML("beforeend", strContainerDiv);
 }
+
+//reset screen
+// empty the list html updateds the counter and rending all the tasks again
+function renderList() {
+  elList.innerHTML = "";
+  counter = todoList.length;
+  todoList.forEach((todo) => {
+    renderTask(todo);
+  });
+}
+
+// functions
 
 // changes the date object to sql format
 function changeDateFormat(date) {
@@ -163,96 +89,97 @@ function changeDateFormat(date) {
   return currentTime;
 }
 
-// creates the count and sort
-function addCountAndSort() {
-  // creating the counter
-  const counter = document.createElement("h2");
-  counter.classList.add("counter");
-  counter.setAttribute("id", "counter");
-  counter.innerText = `Tasks so far - 0`;
-  countAndSortSection.appendChild(counter);
-  // creating the sort button
-  const sortButton = document.createElement("button");
-  sortButton.classList.add("sort-button");
-  sortButton.innerText = "Sort by priority";
-  countAndSortSection.appendChild(sortButton);
-}
-// sort the list
-function sortByPriority() {
-  let listItems = list.querySelectorAll(".todo-container");
-  for (let i = 1; i <= 5; i++) {
-    for (const item of listItems) {
-      if (item.querySelector(".todo-priority").innerText === i.toString()) {
-        list.insertBefore(item, list.firstChild);
-      }
+// sets uniqe id to every element
+// if by a miracle theres is the same id as in the list array its recursively summon another id
+function makeId(length = 6) {
+  var uniqueId = "";
+  var possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < length; i++) {
+    uniqueId += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+
+  // make new id if exists
+  for (let i = 0; i < todoList.length; i++) {
+    const todo = todoList[i];
+    if (todo.id === uniqueId) {
+      return makeId();
     }
   }
+
+  return uniqueId;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
-// API
-// update
-const updateBin = async () => {
-  // path tho get all of the dates in the html
-  const allDates = document.querySelectorAll(
-    "body > div.view-section-wrapper > div > div > div.todo-created-at"
-  );
-  // path tho get all of the text in the html
-  const allTextInputs = document.querySelectorAll(
-    "body > div.view-section-wrapper > div > div > div.todo-text"
-  );
-  // path tho get all of the priorities in the html
-  const allPriorities = document.querySelectorAll(
-    "body > div.view-section-wrapper > div > div > div.todo-priority"
-  );
-  // create objects and assign them to the array
-  for (let i = 0; i < allDates.length; i++) {
-    const obj = {
-      date: allDates[i].textContent,
-      text: allTextInputs[i].textContent,
-      priority: allPriorities[i].textContent,
-    };
-    // todoList.push(obj);
+//function sort
+function sortByPriority() {
+  let swapped;
+  do {
+    swapped = false;
+    for (let i = 0; i < todoList.length - 1; i++) {
+      if (todoList[i].priority < todoList[i + 1].priority) {
+        swapped = true;
+        let temp = todoList[i + 1];
+        todoList[i + 1] = todoList[i];
+        todoList[i] = temp;
+      }
+    }
+  } while (swapped);
+  renderList();
+  updateBin();
+}
+
+//delete
+//get the index of the elemnt with the proper removes it from the array and sends it to renderlist
+function deleteAndCheck(id) {
+  const removeIdx = todoList.findIndex((todo) => todo.id === id);
+  console.log("removeIdx:", removeIdx);
+  if (removeIdx !== -1) {
+    todoList.splice(removeIdx, 1);
+    counter--;
+    renderTodoCountSoFar();
   }
-  console.log(todoList);
-  // actual post request
-  const url = `https://api.jsonbin.io/v3/b/60154a5daafcad2f59618c13`;
+  renderList();
+  updateBin();
+}
+// render the list from the bin and the the func to put the count and sort button
+readBin();
+renderTodoCountSoFar();
 
-  fetch(url, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ "my-todo": todoList }),
-  });
-};
+// Api
+// read funcs
 
-// function binUpdate() {
-//   const url = `https://api.jsonbin.io/v3/b/60154a5daafcad2f59618c13`;
-
-//     fetch(url, {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ "my-todo": todoList }),
-//   });
-// }
-
-// read
 async function readBin() {
-  URL = "https://api.jsonbin.io/v3/b/60154a5daafcad2f59618c13/latest";
-  const serverResponse = await fetch(URL);
-  const res = await serverResponse.json();
-  console.log(res);
-  todoList = res.record["my-todo"];
+  try {
+    const options = {
+      method: "GET",
+      headers: { "X-Master-Key": API_KEY },
+    };
+    const request = await fetch(`${apiURL}/latest`, options);
+    const output = await request.json();
+    // assign the array with the the array from the bin
+    todoList = output.record["my-todo"];
+    // render the list
+    renderList();
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-  // for (const todo of todoList) {
-  //   addTask(todo);
-  // }
-  todoList.forEach(function (todo, i) {
-    console.log(i, todo);
-    addTask(todo, i);
-  });
-  firstLoad = false;
+//update funcs
+async function updateBin() {
+  try {
+    let reqBody = { ["my-todo"]: todoList };
+    const options = {
+      method: "PUT",
+      headers: {
+        "X-Master-Key": API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reqBody),
+    };
+    fetch(apiURL, options);
+  } catch (error) {
+    console.log(error);
+  }
 }

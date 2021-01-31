@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ben Hanover Todo List</title>
-    <script src="utils.js"></script>
-    <link rel="stylesheet" href="./style.css">
-    <!-- fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
-  </head>
 
-  <body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ben Hanover Todo List</title>
+  <!-- fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+  <link rel="stylesheet" href="./style.css">
+</head>
 
-    <header>
-      <h1>Ben's Todo List</h1>
-    </header>
+<body>
 
-    <div class="control-section">
-      <input type="text" id="text-input" placeholder="what do we need to do..?">
-      <button id="add-button" type="submit" value="0" data-counter>
-        <i class="fas fa-plus-square"></i>
-      </button>
-      <select id="priority-selector">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
+  <header>
+    <h1>Ben's Todo List</h1>
+  </header>
+
+  <div class="control-section">
+    <input type="text" id="text-input" placeholder="what do we need to do..?">
+    <button id="add-button" type="submit" value="0" data-counter>
+      <i class="fas fa-plus-square"></i>
+    </button>
+    <select id="priority-selector">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </div>
+  <div class="countAndSortWapper">
+    <div class="countAndSortSection">
     </div>
-    <div class="countAndSortWapper">
-      <div class="countAndSortSection">
-      </div>
+  </div>
+  <div class="view-section-wrapper">
+    <div class="view-section">
     </div>
-    <div class="view-section-wrapper">
-      <div class="view-section">
-      </div>
-    </div>
-    <script src="./main.js"></script>
-  </body>
+  </div>
+  
+  <script src="./main.js"></script>
+</body>
+
 </html>

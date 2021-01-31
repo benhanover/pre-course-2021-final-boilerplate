@@ -114,7 +114,7 @@ header,
   align-items: center;
 }
 
-.sort-button {
+#sort-button {
   background: white;
   color: #926dc3;
   border: none;
