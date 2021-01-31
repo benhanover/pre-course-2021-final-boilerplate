@@ -128,7 +128,7 @@ function sortByPriority() {
     }
   } while (swapped);
   renderList();
-  updateBin();
+  // updateBin();
 }
 
 //delete

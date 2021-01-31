@@ -8,14 +8,14 @@
 
 -we have a **counter** that will always tell you how many tasks you have
 
--we have a **sort** button so when things get messy, you will have the important task up above
+-we have a **sort** button so when things get messy, you will have the important tasks up above
 
 ## Premium
 
--we have **store** all of your data tasks at the cloud so you can access it with any device:)
+-we have **stored** all of your data tasks at the cloud so you can access it with any device:)
 
 -we have a **completed** button so you you can mark the things you have done :)
 
 -we have **trash** button so when you finish your tasks and the day is gone you can delete them:)
 
-**thats about it for this time.. keep in it touch**
+**thats about it for this time.. Stay Tuned..**
