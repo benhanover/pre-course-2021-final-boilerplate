@@ -15,6 +15,9 @@ const elPriority = document.querySelector("#priority-selector");
 const elCountAndSortSection = document.querySelector(".countAndSortSection");
 const elSort = document.querySelector(".sort-button");
 
+// render the list from the bin and the count and sort elements
+readBin();
+
 // bind add new todo
 elAddButton.addEventListener("click", (e) => {
   if (elInput.value === "") {
@@ -39,10 +42,9 @@ elAddButton.addEventListener("click", (e) => {
 
 // creates the count and sort elements
 function renderTodoCountSoFar() {
-  // <h2>Tasks so far -</h2>
-  // <h2 id="counter" class="counter">${counter}</h2>
   elCountAndSortSection.innerHTML = /*html*/ `
-    <h2 id="counter" class="counter">Tasks so far - ${counter}</h2>
+    <h2>Tasks so far -</h2>
+    <h2 id="counter" class="counter">${counter}</h2>
     <button id="sort-button" onclick="sortByPriority()">Sort by priority</button>`;
 }
 // prints the task in the html
@@ -57,7 +59,7 @@ function renderTask(taskObj) {
         <div class="todo-priority">${taskObj.priority}</div>
         <div class="todo-created-at">${dateStr}</div>
         <div class="todo-text">${taskObj.text}</div>
-        <button class="complete-btn">
+        <button class="complete-btn" onclick="this.parentElement.classList.toggle('completed');">
           <i class="fas fa-check"></i>
         </button>
         <button class="trash-btn" onclick="deleteAndCheck('${taskObj.id}')">
@@ -142,9 +144,6 @@ function deleteAndCheck(id) {
   renderList();
   updateBin();
 }
-// render the list from the bin and the the func to put the count and sort button
-readBin();
-renderTodoCountSoFar();
 
 // Api
 // read funcs
@@ -161,6 +160,10 @@ async function readBin() {
     todoList = output.record["my-todo"];
     // render the list
     renderList();
+    // counter gets the list length
+    counter = todoList.length;
+    // render the the count and sort
+    renderTodoCountSoFar();
   } catch (error) {
     console.log(error);
   }

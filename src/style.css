@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-align: center;
 }
 
 body {
@@ -125,4 +126,11 @@ header,
   border-radius: 10%;
   margin-bottom: 10%;
   margin-top: 5%;
+}
+
+/* media query */
+@media screen and (max-width: 1320px) {
+  .todo-container {
+    margin: 0.3rem;
+  }
 }
