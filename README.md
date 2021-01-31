@@ -1,11 +1,21 @@
 # ![Scale-Up Velocity](./readme-files/logo-main.png) Pre Course Project - Ben's Todo List 📋
 
-## Instructions
+## So what do we have?
 
-**Note** You can add extra properties to the todo objects in the JSON that you want to be persistent.
+-we have an **input** line where you can type your daily todo's.
 
-## Bonus
+-we have a selector in which you can **prioritize** the tasks you have
 
-- jsonbin.io - see explanation above
-  - Delete a todo
-  - Mark/Unmark todo as done
+-we have a **counter** that will always tell you how many tasks you have
+
+-we have a **sort** button so when things get messy, you will have the important task up above
+
+## Premium
+
+-we have **store** all of your data tasks at the cloud so you can access it with any device:)
+
+-we have a **completed** button so you you can mark the things you have done :)
+
+-we have **trash** button so when you finish your tasks and the day is gone you can delete them:)
+
+**thats about it for this time.. keep in it touch**
