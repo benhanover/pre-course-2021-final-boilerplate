@@ -13,7 +13,6 @@ const elAddButton = document.querySelector("#add-button");
 const elList = document.querySelector(".view-section");
 const elPriority = document.querySelector("#priority-selector");
 const elCountAndSortSection = document.querySelector(".countAndSortSection");
-const elSort = document.querySelector(".sort-button");
 
 // render the list from the bin and display the count and sort elements
 readBin();
@@ -89,10 +88,18 @@ function renderList() {
 // functions
 
 // find the index of the object in the array and changes its text to what prompt gets
+// and sets the priority again
 function editText(id) {
   const editIdx = todoList.findIndex((todo) => todo.id === id);
   text = prompt("enter edited task: ");
-  todoList[editIdx].text = text;
+  if (text !== null) {
+    todoList[editIdx].text = text;
+  }
+  newPriority = Number(prompt("enter the priority"));
+  while (newPriority < 1 || newPriority > 6) {
+    newPriority = Number(prompt("enter priority between 1 to 5"));
+  }
+  todoList[editIdx].priority = newPriority;
   renderList();
   updateBin();
 }
@@ -128,7 +135,7 @@ function makeId(length = 6) {
   return uniqueId;
 }
 
-//function sort
+//function bubble sort
 function sortByPriority() {
   let swapped;
   do {
@@ -143,7 +150,7 @@ function sortByPriority() {
     }
   } while (swapped);
   renderList();
-  // updates the bin with the sorted aray but fails the sort test and the json test
+  // line below updates the bin with the sorted aray but fails the sort test and the json test
   // updateBin();
 }
 
