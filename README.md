@@ -18,4 +18,6 @@
 
 -we have **trash** button so when you finish your tasks and the day is gone you can delete them:)
 
+-we have **edit** button so you can change the task if you have a typo :)
+
 **thats about it for this time.. Stay Tuned..**

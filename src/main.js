@@ -56,6 +56,9 @@ function renderTask(taskObj) {
 
   const strContainerDiv = /*html*/ `
       <div class="todo-container">
+        <button class="highlight" onclick="this.parentElement.classList.toggle('highlighted');">
+          <i class="fas fa-highlighter"></i>
+        </button>
         <div class="todo-priority">${taskObj.priority}</div>
         <div class="todo-created-at">${dateStr}</div>
         <div class="todo-text">${taskObj.text}</div>
