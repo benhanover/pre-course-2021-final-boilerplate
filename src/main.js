@@ -15,13 +15,13 @@ const elPriority = document.querySelector("#priority-selector");
 const elCountAndSortSection = document.querySelector(".countAndSortSection");
 const elSort = document.querySelector(".sort-button");
 
-// render the list from the bin and the count and sort elements
+// render the list from the bin and display the count and sort elements
 readBin();
 
 // bind add new todo
 elAddButton.addEventListener("click", (e) => {
   if (elInput.value === "") {
-    alert("Please type a name");
+    alert("Please type a task");
     return;
   }
   taskObj = {
@@ -59,6 +59,9 @@ function renderTask(taskObj) {
         <div class="todo-priority">${taskObj.priority}</div>
         <div class="todo-created-at">${dateStr}</div>
         <div class="todo-text">${taskObj.text}</div>
+        <button class="edit-btn" onclick="editText('${taskObj.id}')">
+          <i class="fas fa-edit"></i>
+        </button>
         <button class="complete-btn" onclick="this.parentElement.classList.toggle('completed');">
           <i class="fas fa-check"></i>
         </button>
@@ -81,6 +84,15 @@ function renderList() {
 }
 
 // functions
+
+// find the index of the object in the array and changes its text to what prompt gets
+function editText(id) {
+  const editIdx = todoList.findIndex((todo) => todo.id === id);
+  text = prompt("enter edited task: ");
+  todoList[editIdx].text = text;
+  renderList();
+  updateBin();
+}
 
 // changes the date object to sql format
 function changeDateFormat(date) {
@@ -128,6 +140,7 @@ function sortByPriority() {
     }
   } while (swapped);
   renderList();
+  // updates the bin with the sorted aray but fails the sort test and the json test
   // updateBin();
 }
 
@@ -135,7 +148,6 @@ function sortByPriority() {
 //get the index of the elemnt with the proper removes it from the array and sends it to renderlist
 function deleteAndCheck(id) {
   const removeIdx = todoList.findIndex((todo) => todo.id === id);
-  console.log("removeIdx:", removeIdx);
   if (removeIdx !== -1) {
     todoList.splice(removeIdx, 1);
     counter--;
