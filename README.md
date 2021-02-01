@@ -20,6 +20,6 @@
 
 -we have **edit** button so you can change the task as you like :)
 
-- we have **highlight** button so you can highlight wanted tasks :)
+-we have **highlight** button so you can highlight wanted tasks :)
 
 **thats about it for this time.. Stay Tuned..**

@@ -131,7 +131,6 @@ function makeId(length = 6) {
       return makeId();
     }
   }
-
   return uniqueId;
 }
 
