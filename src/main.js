@@ -1,5 +1,4 @@
 // set up for api
-const API_KEY = "$2b$10$Gngt6a2X5rSlrH5bkOyscea5zrXZQGieIPFU6D02.H8lZidUy7n3a";
 const BIN_ID = "601699620ba5ca5799d18d7b";
 const apiURL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
@@ -13,6 +12,7 @@ const elAddButton = document.querySelector("#add-button");
 const elList = document.querySelector(".view-section");
 const elPriority = document.querySelector("#priority-selector");
 const elCountAndSortSection = document.querySelector(".countAndSortSection");
+const spinner = document.getElementById("spinner");
 
 // render the list from the bin and display the count and sort elements
 readBin();
@@ -169,41 +169,50 @@ function deleteAndCheck(id) {
 // Api
 // read funcs
 
-async function readBin() {
-  try {
-    const options = {
-      method: "GET",
-      headers: { "X-Master-Key": API_KEY },
+function readBin() {
+  spinner.removeAttribute("hidden");
+  const request = fetch(`${apiURL}/latest`);
+  function getJsonFromResponse(res) {
+    if (!res.ok) {
+      throw new Error("Something went wrong..");
+    }
+    const jsonPromise = res.json();
+    const logJson = (json) => {
+      // assign the array with the bin array
+      todoList = json.record["my-todo"];
+      // render the task html
+      renderList();
+      // counter gets the list length
+      counter = todoList.length;
+      // render the the count and sort
+      renderTodoCountSoFar();
+      spinner.setAttribute("hidden", "");
     };
-    const request = await fetch(`${apiURL}/latest`, options);
-    const output = await request.json();
-    // assign the array with the the array from the bin
-    todoList = output.record["my-todo"];
-    // render the list
-    renderList();
-    // counter gets the list length
-    counter = todoList.length;
-    // render the the count and sort
-    renderTodoCountSoFar();
-  } catch (error) {
-    console.log(error);
+    jsonPromise.then(logJson);
   }
+  request.then(getJsonFromResponse).catch((error) => {
+    console.log(error);
+  });
 }
 
 //update funcs
-async function updateBin() {
-  try {
-    let reqBody = { ["my-todo"]: todoList };
-    const options = {
-      method: "PUT",
-      headers: {
-        "X-Master-Key": API_KEY,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(reqBody),
-    };
-    fetch(apiURL, options);
-  } catch (error) {
-    console.log(error);
-  }
+function updateBin() {
+  spinner.removeAttribute("hidden");
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ["my-todo"]: todoList }),
+  };
+  fetch(apiURL, options)
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("there was a problem.. your changes didnt save");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  spinner.setAttribute("hidden", "");
 }
