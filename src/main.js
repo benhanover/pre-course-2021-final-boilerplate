@@ -1,6 +1,6 @@
 // set up for api
-const BIN_ID = "601699620ba5ca5799d18d7b";
-const apiURL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const BIN_ID = "1";
+const apiURL = 'http://localhost:3000/b/';
 
 // variables
 let = counter = 0;
@@ -30,8 +30,7 @@ elAddButton.addEventListener("click", (e) => {
     id: makeId(),
   };
   todoList.push(taskObj);
-  renderTask(taskObj);
-  updateBin();
+  updateBin(taskObj);
   elInput.value = "";
   counter++;
   renderTodoCountSoFar();
@@ -162,8 +161,8 @@ function deleteAndCheck(id) {
     counter--;
     renderTodoCountSoFar();
   }
-  renderList();
   updateBin();
+  renderList();
 }
 
 // Api
@@ -171,7 +170,7 @@ function deleteAndCheck(id) {
 
 function readBin() {
   spinner.removeAttribute("hidden");
-  const request = fetch(`${apiURL}/latest`);
+  const request = fetch(apiURL + BIN_ID);
   function getJsonFromResponse(res) {
     if (!res.ok) {
       throw new Error("Something went wrong..");
@@ -196,7 +195,7 @@ function readBin() {
 }
 
 //update funcs
-function updateBin() {
+function updateBin(taskObj) {
   spinner.removeAttribute("hidden");
   const options = {
     method: "PUT",
@@ -205,8 +204,10 @@ function updateBin() {
     },
     body: JSON.stringify({ ["my-todo"]: todoList }),
   };
-  fetch(apiURL, options)
+  fetch(apiURL + BIN_ID, options)
     .then((res) => {
+      spinner.setAttribute("hidden", "");
+      renderTask(taskObj);
       if (!res.ok) {
         throw new Error("there was a problem.. your changes didnt save");
       }
@@ -214,5 +215,4 @@ function updateBin() {
     .catch((err) => {
       console.log(err);
     });
-  spinner.setAttribute("hidden", "");
 }
