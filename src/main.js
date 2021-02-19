@@ -33,7 +33,6 @@ elAddButton.addEventListener("click", (e) => {
   updateBin(taskObj);
   elInput.value = "";
   counter++;
-  renderTodoCountSoFar();
 });
 
 // Render functions
@@ -208,6 +207,7 @@ function updateBin(taskObj) {
     .then((res) => {
       spinner.setAttribute("hidden", "");
       renderTask(taskObj);
+      renderTodoCountSoFar();
       if (!res.ok) {
         throw new Error("there was a problem.. your changes didnt save");
       }
