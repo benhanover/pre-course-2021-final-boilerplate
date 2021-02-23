@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "jest --verbose",
-    "nodemon": "nodemon ./server/postman.js"
+    "nodemon": "nodemon ./server/postman.js",
+    "supertest": "jest ./server/supertest.test.js --verbose"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,9 @@
     "jest": "^26.0.1",
     "nock": "^13.0.6",
     "nock-puppeteer": "^1.0.2",
+    "nodemon": "^2.0.7",
     "puppeteer": "^4.0.0",
-    "nodemon": "^2.0.7"
+    "supertest": "^6.1.3"
   },
   "dependencies": {
     "express": "^4.17.1"

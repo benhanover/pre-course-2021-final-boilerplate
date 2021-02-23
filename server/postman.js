@@ -2,15 +2,16 @@ const { Console } = require("console");
 const { request } = require("express");
 const express = require (`express`);
 const app = express();
+module.exports = app;
+// run nodemon from pre course 2021 final boilerplate or adjust the path
 const path = './server/db';
 
-app.listen(3000 , ()=> { console.log("lissning at 3000")} );
+app.listen(3000 , ()=> { console.log("listening at 3000") } );
 
 app.use('/b', (req, res, next) => {
   setTimeout(next, 500);
 });
 app.use(express.json());
-
 
 
 
