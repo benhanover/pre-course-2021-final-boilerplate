@@ -45,7 +45,6 @@ app.post("/b", (request, response) => {
         throw ({status: 400, message: 'Bad Request - Bin cannot be blank'});
     }
 
-     console.log(request.body);
       let counterObj = JSON.parse(fs.readFileSync(`${path}/counter.json`,{encoding:'utf8', flag:'r'}));
       counterObj["id"] +=  1 ;
       const counter = counterObj["id"];
@@ -76,7 +75,6 @@ app.put("/b/:id", (request, response) => {
   try {
     const { id } = request.params;
     const { body } = request;
-    console.log(!isNaN(id));
     // CHECKING FOR ERRORS
     // REQUIREMENT: headers = {'content-type': 'application/json`}
     if (!('content-type' in request.headers && request.headers['content-type'] === 'application/json')) {
@@ -157,7 +155,6 @@ app.get("/b/:id" , (request,response) => {
         }
     });
   } catch (e) {
-    console.log(e);
     if(typeof(e) === 'object' && e !== null) {
       response.status(e.status).send(e.message);
     } else {
