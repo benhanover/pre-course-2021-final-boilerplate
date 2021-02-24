@@ -138,7 +138,7 @@ describe("DELETE REQUEST",()=>{
 });
 
 // POST
-//  X  // can add a new bin
+//  V  // can add a new bin
 //  X  //BONUS can not add a bin with illegal body and an appropriate response is sent (status + message)
 
 
@@ -184,7 +184,7 @@ describe("POST REQUEST",()=>{
     expect(newFilesCount-1).toEqual(oldFilesCount);
     expect(response.status).toEqual(200);
 
-    // restores last state
+    // restores state before test
     fs.unlinkSync(`./server/db/bins/bin-${newFileId}.json`);
     fs.writeFileSync(`./server/db/counter.json`, JSON.stringify({id: Number(newFileId)-1 } , null, 4));
   
